@@ -31,11 +31,7 @@ namespace UniversalCodeHelper.Forms
       
         private void btnExample_Click(object sender, EventArgs e)
         {
-            txtEnter.Text = @"int age;
-                            double price;
-                            string name;
-                            bool isActive;
-                            ";
+            txtEnter.Text = @"int age;"+nl+"double price;"+nl+"string name;"+nl+"bool isActive;";
         }
 
         private void btnGenerate_Click(object sender, EventArgs e)
@@ -51,25 +47,38 @@ namespace UniversalCodeHelper.Forms
             section3();
             section4();
             section5();
-            txtSourceCode.Text = result;
+            txtSourceCode.Text = result;  
         }
 
         void calibrateProperties()
         {
-            string prop = txtEnter.Text.Trim();
             properties.Clear();
-            string[] props = prop.Split(';');
+            string prop = txtEnter.Text.Trim();
+            string[] props = prop.Split(Environment.NewLine);
+
             foreach (string item in props)
             {
-                if (item.Split(' ').Length == 2)
+                string clean1 = item.Replace(';', ' ');
+                string clean2 = clean1.Trim();
+                string[] subs= clean2.Split(' ');
+
+                List<string> parts = new List<string>();
+
+                foreach (string subitem in subs)
                 {
-                    string[] sub = item.Split(' ');
+                    if (subitem.Trim() != string.Empty)
+                        parts.Add(subitem);
+                }
+
+                if (parts.Count == 2)
+                {
+                    
                     ClassProperty obj = new ClassProperty();
-                    obj.typeName = sub[0].Trim();
-                    obj.propName = sub[1].Trim();
+                    obj.typeName = parts.First();
+                    obj.propName = parts.Last();
                     properties.Add(obj);
                 }
-            }
+            }  
         }
 
         //this creates header
@@ -95,6 +104,7 @@ namespace UniversalCodeHelper.Forms
             }
         }
 
+        //create construction
         void section3()
         {
            
@@ -102,14 +112,14 @@ namespace UniversalCodeHelper.Forms
 
             foreach (ClassProperty item in properties)
             {
-                result += tab+tab + "this." + item.propName+";" + nl;
+                result += tab+tab + "this." + item.propName+"," + nl;
             }
 
             result += tab + "});";
  
         }
-
-
+         
+        
         void section4()
         {
             result += nl + nl + tab + "Map<String, dynamic> toJson() => {" + nl;

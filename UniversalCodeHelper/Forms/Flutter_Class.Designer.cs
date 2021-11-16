@@ -79,7 +79,7 @@ namespace UniversalCodeHelper.Forms
             this.txtEnter.Name = "txtEnter";
             this.txtEnter.Size = new System.Drawing.Size(291, 384);
             this.txtEnter.TabIndex = 2;
-            this.txtEnter.Text = "int age;\r\ndouble price;\r\nstring name;\r\nbool isActive;\r\n";
+            this.txtEnter.Text = "int age ; \r\nstring   name;  \r\n  \r\n  \r\nss";
             // 
             // label2
             // 
