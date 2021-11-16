@@ -132,6 +132,7 @@ namespace UniversalCodeHelper.Forms
             this.btnGenerate.TabIndex = 6;
             this.btnGenerate.Text = "Generate";
             this.btnGenerate.UseVisualStyleBackColor = false;
+            this.btnGenerate.Click += new System.EventHandler(this.btnGenerate_Click);
             // 
             // btnCopyToClipboard
             // 
