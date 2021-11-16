@@ -30,9 +30,7 @@ namespace UniversalCodeHelper.Forms
             frm.Deactivate += Frm_Deactivate;
             frm.ShowDialog();
             //this.Close();
-
-
-
+             
         }
 
         private void Frm_Deactivate(object sender, EventArgs e)

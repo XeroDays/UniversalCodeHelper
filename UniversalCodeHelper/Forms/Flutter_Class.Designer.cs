@@ -112,9 +112,11 @@ namespace UniversalCodeHelper.Forms
             this.txtSourceCode.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSourceCode.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.txtSourceCode.Location = new System.Drawing.Point(338, 129);
             this.txtSourceCode.Multiline = true;
             this.txtSourceCode.Name = "txtSourceCode";
+            this.txtSourceCode.ReadOnly = true;
             this.txtSourceCode.Size = new System.Drawing.Size(529, 384);
             this.txtSourceCode.TabIndex = 5;
             // 
@@ -148,6 +150,7 @@ namespace UniversalCodeHelper.Forms
             this.btnCopyToClipboard.TabIndex = 7;
             this.btnCopyToClipboard.Text = "Copy to clipboard";
             this.btnCopyToClipboard.UseVisualStyleBackColor = false;
+            this.btnCopyToClipboard.Click += new System.EventHandler(this.btnCopyToClipboard_Click);
             // 
             // txtClassName
             // 

@@ -13,6 +13,8 @@ namespace UniversalCodeHelper.Forms
     public partial class Flutter_Class : Form
     {
         string result = "";
+        string nl = "\r\n";
+        string tab = "       ";
 
 
         List<ClassProperty> properties = new List<ClassProperty>();
@@ -46,13 +48,16 @@ namespace UniversalCodeHelper.Forms
             calibrateProperties();
             section1();
             section2();
+            section3();
+            section4();
+            section5();
             txtSourceCode.Text = result;
         }
 
         void calibrateProperties()
         {
             string prop = txtEnter.Text.Trim();
-
+            properties.Clear();
             string[] props = prop.Split(';');
             foreach (string item in props)
             {
@@ -70,7 +75,7 @@ namespace UniversalCodeHelper.Forms
         //this creates header
         void section1()
         {
-            result = "class " + txtClassName.Text + " {\n";
+            result = "class " + txtClassName.Text + nl+"{"+ nl;
         }
 
         // this creates properties
@@ -78,12 +83,54 @@ namespace UniversalCodeHelper.Forms
         {
             foreach (ClassProperty item in properties)
             {
-                result += item.typeName + " " + item.propName + ";\n";
+                if(item.typeName=="string")
+                {
+                    result += tab + "String" + " " + item.propName + ";" + nl;
+                }
+                else
+                {
+                    result += tab + item.typeName + " " + item.propName + ";" + nl;
+                }
+               
             }
         }
 
+        void section3()
+        {
+           
+            result += nl+ tab+ txtClassName.Text+ nl+tab+"({"+nl;
+
+            foreach (ClassProperty item in properties)
+            {
+                result += tab+tab + "this." + item.propName+";" + nl;
+            }
+
+            result += tab + "});";
+ 
+        }
 
 
+        void section4()
+        {
+            result += nl + nl + tab + "Map<String, dynamic> toJson() => {" + nl;
+            foreach (ClassProperty item in properties)
+            {
+                result += tab + tab + "\"" + item.propName + "\" : " + item.propName+","+nl;
+            }
+
+            result += tab + "};";
+        }
+
+        void section5()
+        {
+            result += nl + nl + tab + "factory "+txtClassName.Text+".fromJson(dynamic json) => "+txtClassName.Text+"(" + nl;
+            foreach (ClassProperty item in properties)
+            {
+                result += tab + tab +   item.propName + " : " + "json[\""+item.propName+"\"]" + "," + nl;
+            }
+            result += tab + ");";
+            result += nl + "}";
+        }
 
         #region Drager
         int movX, movY;
@@ -104,6 +151,11 @@ namespace UniversalCodeHelper.Forms
             {
                 this.SetDesktopLocation(MousePosition.X - movX, MousePosition.Y - movY);
             }
+        }
+
+        private void btnCopyToClipboard_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(txtSourceCode.Text);
         }
 
         private void onMouseUp(object sender, MouseEventArgs e)
