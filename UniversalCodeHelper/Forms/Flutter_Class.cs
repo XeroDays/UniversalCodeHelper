@@ -96,11 +96,11 @@ namespace UniversalCodeHelper.Forms
             {
                 if(item.typeName=="string")
                 {
-                    result += tab + (radioLate.Checked ? "late " : "") +  "String"+(radioLate.Checked?"? ":"") + " " + item.propName + ";" + nl;
+                    result += tab + (radioLate.Checked ? "late " : "") +  "String"+(radioNullSafety.Checked?"? ":"") + " " + item.propName + ";" + nl;
                 }
                 else
                 {
-                    result += tab + (radioLate.Checked ? "late " : "") + item.typeName + (radioLate.Checked ? "? " : "") + " " + item.propName + ";" + nl;
+                    result += tab + (radioLate.Checked ? "late " : "") + item.typeName + (radioNullSafety.Checked ? "? " : "") + " " + item.propName + ";" + nl;
                 }
                
             }
@@ -109,15 +109,22 @@ namespace UniversalCodeHelper.Forms
         //create construction
         void section3()
         {
-           
-            result += nl+ tab+ classname + nl+tab+"({"+nl;
-
-            foreach (ClassProperty item in properties)
+            if (radioLate.Checked)
             {
-                result += tab+tab + (chkBoxRequired.Checked? "required " : "") + "this." + item.propName+"," + nl;
-            }
+                result += nl + tab + classname + nl + tab + "();" + nl;
+            } else
+            {
+                result += nl + tab + classname + nl + tab + "({" + nl;
 
-            result += tab + "});";
+                foreach (ClassProperty item in properties)
+                {
+                    result += tab + tab + (radioRequired.Checked ? "required " : "") + "this." + item.propName + "," + nl;
+                }
+
+                result += tab + "});";
+            }
+           
+          
  
         }
          

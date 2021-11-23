@@ -27,7 +27,7 @@ namespace UniversalCodeHelper.Forms
             Flutter_Class frm = new Flutter_Class();
             this.Hide();
 
-            frm.Deactivate += Frm_Deactivate;
+            frm.Disposed += Frm_Deactivate;
             frm.ShowDialog();
             //this.Close();
              

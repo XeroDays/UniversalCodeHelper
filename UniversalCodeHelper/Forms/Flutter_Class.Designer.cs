@@ -40,9 +40,10 @@ namespace UniversalCodeHelper.Forms
             this.txtClassName = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.radioRequired = new System.Windows.Forms.RadioButton();
-            this.radioNullSafety = new System.Windows.Forms.RadioButton();
             this.radioLate = new System.Windows.Forms.RadioButton();
+            this.radioNullSafety = new System.Windows.Forms.RadioButton();
+            this.radioRequired = new System.Windows.Forms.RadioButton();
+            this.btnDispose = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -185,16 +186,15 @@ namespace UniversalCodeHelper.Forms
             this.panel1.Size = new System.Drawing.Size(370, 75);
             this.panel1.TabIndex = 10;
             // 
-            // radioRequired
+            // radioLate
             // 
-            this.radioRequired.AutoSize = true;
-            this.radioRequired.Location = new System.Drawing.Point(13, 3);
-            this.radioRequired.Name = "radioRequired";
-            this.radioRequired.Size = new System.Drawing.Size(83, 19);
-            this.radioRequired.TabIndex = 0;
-            this.radioRequired.TabStop = true;
-            this.radioRequired.Text = "Is Required";
-            this.radioRequired.UseVisualStyleBackColor = true;
+            this.radioLate.AutoSize = true;
+            this.radioLate.Location = new System.Drawing.Point(14, 53);
+            this.radioLate.Name = "radioLate";
+            this.radioLate.Size = new System.Drawing.Size(58, 19);
+            this.radioLate.TabIndex = 2;
+            this.radioLate.Text = "Is Late";
+            this.radioLate.UseVisualStyleBackColor = true;
             // 
             // radioNullSafety
             // 
@@ -203,26 +203,40 @@ namespace UniversalCodeHelper.Forms
             this.radioNullSafety.Name = "radioNullSafety";
             this.radioNullSafety.Size = new System.Drawing.Size(82, 19);
             this.radioNullSafety.TabIndex = 1;
-            this.radioNullSafety.TabStop = true;
             this.radioNullSafety.Text = "Null Safety";
             this.radioNullSafety.UseVisualStyleBackColor = true;
             // 
-            // radioLate
+            // radioRequired
             // 
-            this.radioLate.AutoSize = true;
-            this.radioLate.Location = new System.Drawing.Point(14, 53);
-            this.radioLate.Name = "radioLate";
-            this.radioLate.Size = new System.Drawing.Size(58, 19);
-            this.radioLate.TabIndex = 2;
-            this.radioLate.TabStop = true;
-            this.radioLate.Text = "Is Late";
-            this.radioLate.UseVisualStyleBackColor = true;
+            this.radioRequired.AutoSize = true;
+            this.radioRequired.Checked = true;
+            this.radioRequired.Location = new System.Drawing.Point(13, 3);
+            this.radioRequired.Name = "radioRequired";
+            this.radioRequired.Size = new System.Drawing.Size(83, 19);
+            this.radioRequired.TabIndex = 0;
+            this.radioRequired.TabStop = true;
+            this.radioRequired.Text = "Is Required";
+            this.radioRequired.UseVisualStyleBackColor = true;
+            // 
+            // btnDispose
+            // 
+            this.btnDispose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDispose.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnDispose.ForeColor = System.Drawing.Color.Red;
+            this.btnDispose.Location = new System.Drawing.Point(865, 12);
+            this.btnDispose.Name = "btnDispose";
+            this.btnDispose.Size = new System.Drawing.Size(27, 28);
+            this.btnDispose.TabIndex = 11;
+            this.btnDispose.Text = "X";
+            this.btnDispose.UseVisualStyleBackColor = true;
+            this.btnDispose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // Flutter_Class
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(904, 586);
+            this.Controls.Add(this.btnDispose);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label3);
@@ -264,5 +278,6 @@ namespace UniversalCodeHelper.Forms
         private System.Windows.Forms.RadioButton radioLate;
         private System.Windows.Forms.RadioButton radioNullSafety;
         private System.Windows.Forms.RadioButton radioRequired;
+        private System.Windows.Forms.Button btnDispose;
     }
 }
