@@ -39,6 +39,11 @@ namespace UniversalCodeHelper.Forms
             this.btnCopyToClipboard = new System.Windows.Forms.Button();
             this.txtClassName = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.radioRequired = new System.Windows.Forms.RadioButton();
+            this.radioNullSafety = new System.Windows.Forms.RadioButton();
+            this.radioLate = new System.Windows.Forms.RadioButton();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnClose
@@ -170,11 +175,56 @@ namespace UniversalCodeHelper.Forms
             this.label3.TabIndex = 9;
             this.label3.Text = "Class Name";
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.radioLate);
+            this.panel1.Controls.Add(this.radioNullSafety);
+            this.panel1.Controls.Add(this.radioRequired);
+            this.panel1.Location = new System.Drawing.Point(320, 52);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(370, 75);
+            this.panel1.TabIndex = 10;
+            // 
+            // radioRequired
+            // 
+            this.radioRequired.AutoSize = true;
+            this.radioRequired.Location = new System.Drawing.Point(13, 3);
+            this.radioRequired.Name = "radioRequired";
+            this.radioRequired.Size = new System.Drawing.Size(83, 19);
+            this.radioRequired.TabIndex = 0;
+            this.radioRequired.TabStop = true;
+            this.radioRequired.Text = "Is Required";
+            this.radioRequired.UseVisualStyleBackColor = true;
+            // 
+            // radioNullSafety
+            // 
+            this.radioNullSafety.AutoSize = true;
+            this.radioNullSafety.Location = new System.Drawing.Point(14, 28);
+            this.radioNullSafety.Name = "radioNullSafety";
+            this.radioNullSafety.Size = new System.Drawing.Size(82, 19);
+            this.radioNullSafety.TabIndex = 1;
+            this.radioNullSafety.TabStop = true;
+            this.radioNullSafety.Text = "Null Safety";
+            this.radioNullSafety.UseVisualStyleBackColor = true;
+            // 
+            // radioLate
+            // 
+            this.radioLate.AutoSize = true;
+            this.radioLate.Location = new System.Drawing.Point(14, 53);
+            this.radioLate.Name = "radioLate";
+            this.radioLate.Size = new System.Drawing.Size(58, 19);
+            this.radioLate.TabIndex = 2;
+            this.radioLate.TabStop = true;
+            this.radioLate.Text = "Is Late";
+            this.radioLate.UseVisualStyleBackColor = true;
+            // 
             // Flutter_Class
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(904, 586);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtClassName);
             this.Controls.Add(this.btnCopyToClipboard);
@@ -184,7 +234,6 @@ namespace UniversalCodeHelper.Forms
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtEnter);
             this.Controls.Add(this.btnClose);
-            this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Flutter_Class";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -192,6 +241,8 @@ namespace UniversalCodeHelper.Forms
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.onMouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.onMouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.onMouseUp);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -209,5 +260,9 @@ namespace UniversalCodeHelper.Forms
         private System.Windows.Forms.Button btnCopyToClipboard;
         private System.Windows.Forms.TextBox txtClassName;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.RadioButton radioLate;
+        private System.Windows.Forms.RadioButton radioNullSafety;
+        private System.Windows.Forms.RadioButton radioRequired;
     }
 }

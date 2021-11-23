@@ -15,7 +15,7 @@ namespace UniversalCodeHelper.Forms
         string result = "";
         string nl = "\r\n";
         string tab = "       ";
-
+        string classname="";
 
         List<ClassProperty> properties = new List<ClassProperty>();
         public Flutter_Class()
@@ -41,6 +41,8 @@ namespace UniversalCodeHelper.Forms
 
         void initiate()
         {
+            classname = txtClassName.Text;
+
             calibrateProperties();
             section1();
             section2();
@@ -84,7 +86,7 @@ namespace UniversalCodeHelper.Forms
         //this creates header
         void section1()
         {
-            result = "class " + txtClassName.Text + nl+"{"+ nl;
+            result = "class " + classname + nl+"{"+ nl;
         }
 
         // this creates properties
@@ -94,11 +96,11 @@ namespace UniversalCodeHelper.Forms
             {
                 if(item.typeName=="string")
                 {
-                    result += tab + "String" + " " + item.propName + ";" + nl;
+                    result += tab + (radioLate.Checked ? "late " : "") +  "String"+(radioLate.Checked?"? ":"") + " " + item.propName + ";" + nl;
                 }
                 else
                 {
-                    result += tab + item.typeName + " " + item.propName + ";" + nl;
+                    result += tab + (radioLate.Checked ? "late " : "") + item.typeName + (radioLate.Checked ? "? " : "") + " " + item.propName + ";" + nl;
                 }
                
             }
@@ -108,11 +110,11 @@ namespace UniversalCodeHelper.Forms
         void section3()
         {
            
-            result += nl+ tab+ txtClassName.Text+ nl+tab+"({"+nl;
+            result += nl+ tab+ classname + nl+tab+"({"+nl;
 
             foreach (ClassProperty item in properties)
             {
-                result += tab+tab + "this." + item.propName+"," + nl;
+                result += tab+tab + (chkBoxRequired.Checked? "required " : "") + "this." + item.propName+"," + nl;
             }
 
             result += tab + "});";
@@ -133,13 +135,27 @@ namespace UniversalCodeHelper.Forms
 
         void section5()
         {
-            result += nl + nl + tab + "factory "+txtClassName.Text+".fromJson(dynamic json) => "+txtClassName.Text+"(" + nl;
-            foreach (ClassProperty item in properties)
+          if(!radioRequired.Checked)
             {
-                result += tab + tab +   item.propName + " : " + "json[\""+item.propName+"\"]" + "," + nl;
+                result += nl + nl + tab + "factory " + classname + ".fromJson(dynamic json) {" + nl;
+                result += tab + tab + classname + " obj = new " + classname + "();" + nl;
+                foreach (ClassProperty item in properties)
+                {
+                    result += tab + tab + "obj." + item.propName + " = " + "json[\"" + item.propName + "\"]" + (item.typeName.ToLower().Contains("string") ? ".toString()" : "") + ";" + nl;
+                }
+                result += tab + tab + "return obj;" + nl;
+                result += tab + "}";
+                result += nl + "}";
+            }else
+            {
+                result += nl + nl + tab + "factory " + classname + ".fromJson(dynamic json) => " + classname + "(" + nl;
+                foreach (ClassProperty item in properties)
+                {
+                    result += tab + tab + item.propName + " : " + "json[\"" + item.propName + "\"]" + "," + nl;
+                }
+                result += tab + ");";
+                result += nl + "}";
             }
-            result += tab + ");";
-            result += nl + "}";
         }
 
         #region Drager
