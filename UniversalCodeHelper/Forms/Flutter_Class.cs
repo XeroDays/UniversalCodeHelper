@@ -127,8 +127,7 @@ namespace UniversalCodeHelper.Forms
           
  
         }
-         
-        
+          
         void section4()
         {
             result += nl + nl + tab + "Map<String, dynamic> toJson() => {" + nl;

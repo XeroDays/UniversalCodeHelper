@@ -44,6 +44,7 @@ namespace UniversalCodeHelper.Forms
             this.radioNullSafety = new System.Windows.Forms.RadioButton();
             this.radioRequired = new System.Windows.Forms.RadioButton();
             this.btnDispose = new System.Windows.Forms.Button();
+            this.radioNoNullSafety = new System.Windows.Forms.RadioButton();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -178,6 +179,7 @@ namespace UniversalCodeHelper.Forms
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.radioNoNullSafety);
             this.panel1.Controls.Add(this.radioLate);
             this.panel1.Controls.Add(this.radioNullSafety);
             this.panel1.Controls.Add(this.radioRequired);
@@ -231,6 +233,16 @@ namespace UniversalCodeHelper.Forms
             this.btnDispose.UseVisualStyleBackColor = true;
             this.btnDispose.Click += new System.EventHandler(this.btnClose_Click);
             // 
+            // radioNoNullSafety
+            // 
+            this.radioNoNullSafety.AutoSize = true;
+            this.radioNoNullSafety.Location = new System.Drawing.Point(102, 28);
+            this.radioNoNullSafety.Name = "radioNoNullSafety";
+            this.radioNoNullSafety.Size = new System.Drawing.Size(130, 19);
+            this.radioNoNullSafety.TabIndex = 3;
+            this.radioNoNullSafety.Text = "Null Safety Disabled";
+            this.radioNoNullSafety.UseVisualStyleBackColor = true;
+            // 
             // Flutter_Class
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -279,5 +291,6 @@ namespace UniversalCodeHelper.Forms
         private System.Windows.Forms.RadioButton radioNullSafety;
         private System.Windows.Forms.RadioButton radioRequired;
         private System.Windows.Forms.Button btnDispose;
+        private System.Windows.Forms.RadioButton radioNoNullSafety;
     }
 }
