@@ -151,7 +151,7 @@ namespace UniversalCodeHelper.Forms
             result += nl + nl + tab + "Map<String, dynamic> toJson() => {" + nl;
             foreach (ClassProperty item in properties)
             {
-                result += tab + tab + "\"" + item.propName + "\" : " + item.propName + "," + nl;
+                result += tab + tab + "\"" + item.propName.ToLower() + "\" : " + item.propName + "," + nl;
             }
 
             result += tab + "};";
@@ -162,10 +162,10 @@ namespace UniversalCodeHelper.Forms
             if (!radioRequired.Checked)
             {
                 result += nl + nl + tab + "factory " + classname + ".fromJson(dynamic json) {" + nl;
-                result += tab + tab + classname + " obj = new " + classname + "();" + nl;
+                result += tab + tab + classname + " obj = " + classname + "();" + nl;
                 foreach (ClassProperty item in properties)
                 {
-                    result += tab + tab + "obj." + item.propName + " = " + "json[\"" + item.propName + "\"]" + (item.typeName.ToLower().Contains("string") ? ".toString()" : "") + ";" + nl;
+                    result += tab + tab + "obj." + item.propName + " = " + "json[\"" + item.propName.ToLower() + "\"]" + (item.typeName.ToLower().Contains("string") ? ".toString()" : "") + ";" + nl;
                 }
                 result += tab + tab + "return obj;" + nl;
                 result += tab + "}";
