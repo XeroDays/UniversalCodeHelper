@@ -60,10 +60,11 @@ namespace UniversalCodeHelper.Forms
             foreach (string item in props)
             {
                 string clean1 = item.Replace("public", "");
-                string clean2 = clean1.Replace("{ get; set; }", ";");
-                string clean3 = clean2.Trim();
-                if(clean3.Length>3)
-                filtered += clean3 + "" + Environment.NewLine;
+                string clean2 = clean1.Replace("late", "");
+                string clean3 = clean2.Replace("{ get; set; }", ";");
+                string clean4 = clean3.Trim();
+                if(clean4.Length>3)
+                filtered += clean4 + "" + Environment.NewLine;
             }
 
             txtEnter.Text = filtered;
@@ -151,7 +152,7 @@ namespace UniversalCodeHelper.Forms
             result += nl + nl + tab + "Map<String, dynamic> toJson() => {" + nl;
             foreach (ClassProperty item in properties)
             {
-                result += tab + tab + "\"" + item.propName.ToLower() + "\" : " + item.propName + "," + nl;
+                result += tab + tab + "\"" + item.propName.ToLower() + "\" : " + getTypebase_toJson(item) + "," + nl;
             }
 
             result += tab + "};";
@@ -183,6 +184,23 @@ namespace UniversalCodeHelper.Forms
             }
         }
 
+
+        string getTypebase_toJson(ClassProperty item)
+        {
+            string outted = "";
+            string propertyName = item.propName;
+            switch (item.typeName.ToLower())
+            { 
+                case "datetime":
+                    outted = propertyName + ".toString()";
+                    break;
+                default:
+                    outted = propertyName;
+                    break;
+            }
+
+            return outted;
+        }
 
         string getTypeBase_fromJSon(ClassProperty item)
         {
