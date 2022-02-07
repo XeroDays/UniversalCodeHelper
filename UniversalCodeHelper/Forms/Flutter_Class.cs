@@ -15,7 +15,7 @@ namespace UniversalCodeHelper.Forms
         string result = "";
         string nl = "\r\n";
         string tab = "       ";
-        string classname="";
+        string classname = "";
 
         List<ClassProperty> properties = new List<ClassProperty>();
         public Flutter_Class()
@@ -28,10 +28,10 @@ namespace UniversalCodeHelper.Forms
             this.Dispose();
         }
 
-      
+
         private void btnExample_Click(object sender, EventArgs e)
         {
-            txtEnter.Text = @"int age;"+nl+"double price;"+nl+"string name;"+nl+"bool isActive;";
+            txtEnter.Text = @"int age;" + nl + "double price;" + nl + "string name;" + nl + "bool isActive;";
         }
 
         private void btnGenerate_Click(object sender, EventArgs e)
@@ -42,14 +42,31 @@ namespace UniversalCodeHelper.Forms
         void initiate()
         {
             classname = txtClassName.Text;
-
+            filterTextBox();
             calibrateProperties();
             section1();
             section2();
             section3();
             section4();
             section5();
-            txtSourceCode.Text = result;  
+            txtSourceCode.Text = result;
+        }
+
+        void filterTextBox()
+        {
+            string prop = txtEnter.Text.Trim();
+            string[] props = prop.Split(Environment.NewLine);
+            string filtered = "";
+            foreach (string item in props)
+            {
+                string clean1 = item.Replace("public", "");
+                string clean2 = clean1.Replace("{ get; set; }", ";");
+                string clean3 = clean2.Trim();
+                if(clean3.Length>3)
+                filtered += clean3 + "" + Environment.NewLine;
+            }
+
+            txtEnter.Text = filtered;
         }
 
         void calibrateProperties()
@@ -62,7 +79,7 @@ namespace UniversalCodeHelper.Forms
             {
                 string clean1 = item.Replace(';', ' ');
                 string clean2 = clean1.Trim();
-                string[] subs= clean2.Split(' ');
+                string[] subs = clean2.Split(' ');
 
                 List<string> parts = new List<string>();
 
@@ -74,19 +91,19 @@ namespace UniversalCodeHelper.Forms
 
                 if (parts.Count == 2)
                 {
-                    
+
                     ClassProperty obj = new ClassProperty();
                     obj.typeName = parts.First();
                     obj.propName = parts.Last();
                     properties.Add(obj);
                 }
-            }  
+            }
         }
 
         //this creates header
         void section1()
         {
-            result = "class " + classname + nl+"{"+ nl;
+            result = "class " + classname + nl + "{" + nl;
         }
 
         // this creates properties
@@ -94,15 +111,15 @@ namespace UniversalCodeHelper.Forms
         {
             foreach (ClassProperty item in properties)
             {
-                if(item.typeName=="string")
+                if (item.typeName == "string")
                 {
-                    result += tab + (radioLate.Checked ? "late " : "") +  "String"+(radioNullSafety.Checked?"? ":"") + " " + item.propName + ";" + nl;
+                    result += tab + (radioLate.Checked ? "late " : "") + "String" + (radioNullSafety.Checked ? "? " : "") + " " + item.propName + ";" + nl;
                 }
                 else
                 {
                     result += tab + (radioLate.Checked ? "late " : "") + item.typeName + (radioNullSafety.Checked ? "? " : "") + " " + item.propName + ";" + nl;
                 }
-               
+
             }
         }
 
@@ -112,7 +129,8 @@ namespace UniversalCodeHelper.Forms
             if (radioLate.Checked)
             {
                 result += nl + tab + classname + nl + tab + "();" + nl;
-            } else
+            }
+            else
             {
                 result += nl + tab + classname + nl + tab + "({" + nl;
 
@@ -123,17 +141,17 @@ namespace UniversalCodeHelper.Forms
 
                 result += tab + "});";
             }
-           
-          
- 
+
+
+
         }
-          
+
         void section4()
         {
             result += nl + nl + tab + "Map<String, dynamic> toJson() => {" + nl;
             foreach (ClassProperty item in properties)
             {
-                result += tab + tab + "\"" + item.propName + "\" : " + item.propName+","+nl;
+                result += tab + tab + "\"" + item.propName + "\" : " + item.propName + "," + nl;
             }
 
             result += tab + "};";
@@ -141,7 +159,7 @@ namespace UniversalCodeHelper.Forms
 
         void section5()
         {
-          if(!radioRequired.Checked)
+            if (!radioRequired.Checked)
             {
                 result += nl + nl + tab + "factory " + classname + ".fromJson(dynamic json) {" + nl;
                 result += tab + tab + classname + " obj = new " + classname + "();" + nl;
@@ -152,7 +170,8 @@ namespace UniversalCodeHelper.Forms
                 result += tab + tab + "return obj;" + nl;
                 result += tab + "}";
                 result += nl + "}";
-            }else
+            }
+            else
             {
                 result += nl + nl + tab + "factory " + classname + ".fromJson(dynamic json) => " + classname + "(" + nl;
                 foreach (ClassProperty item in properties)
