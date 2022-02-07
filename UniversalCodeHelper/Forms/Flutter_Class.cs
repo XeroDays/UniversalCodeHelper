@@ -165,7 +165,7 @@ namespace UniversalCodeHelper.Forms
                 result += tab + tab + classname + " obj = " + classname + "();" + nl;
                 foreach (ClassProperty item in properties)
                 {
-                    result += tab + tab + "obj." + item.propName + " = " + "json[\"" + item.propName.ToLower() + "\"]" + (item.typeName.ToLower().Contains("string") ? ".toString()" : "") + ";" + nl;
+                    result += tab + tab + "obj." + item.propName + " = " + getTypeBase_fromJSon(item) + ";" + nl;
                 }
                 result += tab + tab + "return obj;" + nl;
                 result += tab + "}";
@@ -182,6 +182,30 @@ namespace UniversalCodeHelper.Forms
                 result += nl + "}";
             }
         }
+
+
+        string getTypeBase_fromJSon(ClassProperty item)
+        {
+            // "json[\"" + item.propName.ToLower() + "\"]" + (item.typeName.ToLower().Contains("string") ? ".toString()" : "");
+            string outted = "";
+            string propertyName = item.propName.ToLower();
+            switch (item.typeName.ToLower())
+            {
+                case "string":
+                    outted = $"json['{propertyName}'].toString()";
+                    break;
+                case "datetime":
+                    outted = $"DateTime.parse(json['{propertyName}'].toString())";
+                    break;
+                default:
+                    outted = $"json['{propertyName}']";
+                    break;
+            }
+
+            return outted;
+
+        }
+
 
         #region Drager
         int movX, movY;
