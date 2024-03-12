@@ -16,7 +16,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '7.0'
+        dotnet-version: '5.0'
 
     - name: Restore dependencies
       run: dotnet restore UniversalCodeHelper.sln
@@ -26,7 +26,7 @@ jobs:
 
     - name: Create Zip Archive
       run: |
-        Compress-Archive -Path ./UniversalCodeHelper/bin/Release/net7.0-windows -DestinationPath UniversalCodeHelper_Software.zip
+        Compress-Archive -Path ./UniversalCodeHelper/bin/Release/net5.0-windows -DestinationPath UniversalCodeHelper_Software.zip
       if: success()
 
     - name: Publish Release Artifact
