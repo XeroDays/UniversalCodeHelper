@@ -30,7 +30,7 @@ namespace UniversalCodeHelper.Forms
             frm.Disposed += Frm_Deactivate;
             frm.ShowDialog();
             //this.Close();
-             
+
         }
 
         private void Frm_Deactivate(object sender, EventArgs e)
@@ -67,5 +67,13 @@ namespace UniversalCodeHelper.Forms
             isMoving = false;
         }
         #endregion
+
+        private void btnLocalization_Click(object sender, EventArgs e)
+        {
+            Translator translator = new Translator();
+            this.Hide();
+            translator.Disposed += Frm_Deactivate;
+            translator.Show();
+        }
     }
 }

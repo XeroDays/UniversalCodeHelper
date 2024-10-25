@@ -29,85 +29,117 @@ namespace UniversalCodeHelper.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.btnFlutterClassGenerate = new System.Windows.Forms.Button();
-            this.btnClose = new System.Windows.Forms.Button();
-            this.SuspendLayout();
+            label1 = new System.Windows.Forms.Label();
+            label2 = new System.Windows.Forms.Label();
+            btnFlutterClassGenerate = new System.Windows.Forms.Button();
+            btnClose = new System.Windows.Forms.Button();
+            btnLocalization = new System.Windows.Forms.Button();
+            label3 = new System.Windows.Forms.Label();
+            SuspendLayout();
             // 
             // label1
             // 
-            this.label1.BackColor = System.Drawing.Color.Silver;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label1.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(717, 55);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Universal Code Helper";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.onMouseDown);
-            this.label1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.onMouseMove);
-            this.label1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.onMouseUp);
+            label1.BackColor = System.Drawing.Color.Silver;
+            label1.Dock = System.Windows.Forms.DockStyle.Top;
+            label1.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Bold);
+            label1.Location = new System.Drawing.Point(0, 0);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(819, 73);
+            label1.TabIndex = 0;
+            label1.Text = "Universal Code Helper";
+            label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            label1.MouseDown += onMouseDown;
+            label1.MouseMove += onMouseMove;
+            label1.MouseUp += onMouseUp;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label2.Location = new System.Drawing.Point(11, 100);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(164, 20);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Flutter Class Generator";
+            label2.AutoSize = true;
+            label2.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
+            label2.Location = new System.Drawing.Point(13, 133);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(208, 25);
+            label2.TabIndex = 1;
+            label2.Text = "Flutter Class Generator";
             // 
             // btnFlutterClassGenerate
             // 
-            this.btnFlutterClassGenerate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnFlutterClassGenerate.FlatAppearance.BorderColor = System.Drawing.Color.Green;
-            this.btnFlutterClassGenerate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFlutterClassGenerate.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnFlutterClassGenerate.ForeColor = System.Drawing.Color.Green;
-            this.btnFlutterClassGenerate.Location = new System.Drawing.Point(186, 89);
-            this.btnFlutterClassGenerate.Name = "btnFlutterClassGenerate";
-            this.btnFlutterClassGenerate.Size = new System.Drawing.Size(184, 43);
-            this.btnFlutterClassGenerate.TabIndex = 2;
-            this.btnFlutterClassGenerate.Text = "Generate";
-            this.btnFlutterClassGenerate.UseVisualStyleBackColor = false;
-            this.btnFlutterClassGenerate.Click += new System.EventHandler(this.btnFlutterClassGenerate_Click);
+            btnFlutterClassGenerate.BackColor = System.Drawing.Color.FromArgb(192, 255, 192);
+            btnFlutterClassGenerate.FlatAppearance.BorderColor = System.Drawing.Color.Green;
+            btnFlutterClassGenerate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btnFlutterClassGenerate.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
+            btnFlutterClassGenerate.ForeColor = System.Drawing.Color.Green;
+            btnFlutterClassGenerate.Location = new System.Drawing.Point(227, 125);
+            btnFlutterClassGenerate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            btnFlutterClassGenerate.Name = "btnFlutterClassGenerate";
+            btnFlutterClassGenerate.Size = new System.Drawing.Size(178, 41);
+            btnFlutterClassGenerate.TabIndex = 2;
+            btnFlutterClassGenerate.Text = "Generate";
+            btnFlutterClassGenerate.UseVisualStyleBackColor = false;
+            btnFlutterClassGenerate.Click += btnFlutterClassGenerate_Click;
             // 
             // btnClose
             // 
-            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnClose.ForeColor = System.Drawing.Color.Red;
-            this.btnClose.Location = new System.Drawing.Point(678, 12);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(27, 28);
-            this.btnClose.TabIndex = 3;
-            this.btnClose.Text = "X";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            btnClose.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            btnClose.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
+            btnClose.ForeColor = System.Drawing.Color.Red;
+            btnClose.Location = new System.Drawing.Point(775, 16);
+            btnClose.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            btnClose.Name = "btnClose";
+            btnClose.Size = new System.Drawing.Size(31, 37);
+            btnClose.TabIndex = 3;
+            btnClose.Text = "X";
+            btnClose.UseVisualStyleBackColor = true;
+            btnClose.Click += btnClose_Click;
+            // 
+            // btnLocalization
+            // 
+            btnLocalization.BackColor = System.Drawing.Color.FromArgb(192, 255, 192);
+            btnLocalization.FlatAppearance.BorderColor = System.Drawing.Color.Green;
+            btnLocalization.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btnLocalization.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
+            btnLocalization.ForeColor = System.Drawing.Color.Green;
+            btnLocalization.Location = new System.Drawing.Point(227, 175);
+            btnLocalization.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            btnLocalization.Name = "btnLocalization";
+            btnLocalization.Size = new System.Drawing.Size(178, 41);
+            btnLocalization.TabIndex = 5;
+            btnLocalization.Text = "Generate";
+            btnLocalization.UseVisualStyleBackColor = false;
+            btnLocalization.Click += btnLocalization_Click;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
+            label3.Location = new System.Drawing.Point(33, 183);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(176, 25);
+            label3.TabIndex = 4;
+            label3.Text = "Localization Helper";
             // 
             // Home
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.ClientSize = new System.Drawing.Size(717, 345);
-            this.Controls.Add(this.btnClose);
-            this.Controls.Add(this.btnFlutterClassGenerate);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "Home";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Home";
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.onMouseDown);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.onMouseMove);
-            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.onMouseUp);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            BackColor = System.Drawing.Color.FromArgb(224, 224, 224);
+            ClientSize = new System.Drawing.Size(819, 460);
+            Controls.Add(btnLocalization);
+            Controls.Add(label3);
+            Controls.Add(btnClose);
+            Controls.Add(btnFlutterClassGenerate);
+            Controls.Add(label2);
+            Controls.Add(label1);
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            Name = "Home";
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            Text = "Home";
+            MouseDown += onMouseDown;
+            MouseMove += onMouseMove;
+            MouseUp += onMouseUp;
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -116,5 +148,7 @@ namespace UniversalCodeHelper.Forms
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnFlutterClassGenerate;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Button btnLocalization;
+        private System.Windows.Forms.Label label3;
     }
 }
