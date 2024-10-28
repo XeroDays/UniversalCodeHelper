@@ -1,8 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing.Text;
 using System.Linq;
 using System.Management;
+using System.Net;
+using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,12 +14,15 @@ using System.Windows.Forms;
 
 namespace Softasium.Licenser
 {
- 
-     
+
+
     public class SoftwareLicenceController
     {
         static string CurrentVersion = "1.0.0"; // this could be anything, no operations  are applied on this
-        static int CurrentBuildVersion = 1; 
+        static int CurrentBuildVersion = 1;
+        private const string appID = "TireManager";
+        private const string bearerAuthKey = "iamsyedidreesfrompakistan";
+
 
         private SoftwareLicenseRequestReponse SoftwareLicenseRequestReponse { get; set; }
 
@@ -25,13 +32,13 @@ namespace Softasium.Licenser
         }
 
         private void init()
-        {  
+        {
             //populate software license request model
             SoftwareLicenseRequestReponse = new SoftwareLicenseRequestReponse
             {
                 DeviceUUID = GetCPUID(),
                 DeviceInfo = GetDeviceInfo(),
-                AppID = "1",
+                AppID = appID,
                 BuildVersion = CurrentBuildVersion,
                 VersionName = CurrentVersion
             };
@@ -48,36 +55,36 @@ namespace Softasium.Licenser
                 {
                     foreach (ManagementObject obj in searcher.Get())
                     {
-                        cpuId = obj["ProcessorId"]?.ToString(); 
+                        cpuId = obj["ProcessorId"]?.ToString();
                     }
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error retrieving CPU ID: " + ex.Message);
-            } 
+            }
             return cpuId;
 
         }
-        
+
         private string GetDeviceInfo()
         {
             StringBuilder info = new StringBuilder();
 
             try
-            { 
+            {
                 info.AppendLine("OS Version: " + RuntimeInformation.OSDescription);
-                info.AppendLine("OS Architecture (Bit Rate): " + RuntimeInformation.OSArchitecture.ToString()); 
+                info.AppendLine("OS Architecture (Bit Rate): " + RuntimeInformation.OSArchitecture.ToString());
                 info.AppendLine($"Screen Resolution: {Screen.PrimaryScreen.Bounds.Width} x {Screen.PrimaryScreen.Bounds.Height}");
             }
             catch (Exception ee)
-            {  
+            {
                 info.AppendLine("Error retrieving device info: " + ee.Message);
             }
             StringBuilder details = new StringBuilder();
             try
             {
-               
+
                 using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_OperatingSystem"))
                 {
                     foreach (ManagementObject obj in searcher.Get())
@@ -94,12 +101,52 @@ namespace Softasium.Licenser
                 details.AppendLine("Error retrieving OS details: " + ex.Message);
             }
 
-            info.AppendLine("\nAdditional OS Details:"); 
+            info.AppendLine("\nAdditional OS Details:");
             info.AppendLine(details.ToString());
 
             return info.ToString();
         }
 
+
+        private string RegisterLicense()
+        {
+            //send the request to the server
+            //get the response
+            //return the response
+            return string.Empty;
+        }
+
+
+        //generate task string async method which will send post request to a server url along with the sofware license model in josn body
+        private async Task<string> GenerateTaskStringAsync()
+        {
+            try
+            {
+                //string jsonContent = JsonSerializer.Serialize(SoftwareLicenseRequestReponse);
+                //var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+                //HttpResponseMessage response = await _httpClient.PostAsync(serverUrl, content);
+                //response.EnsureSuccessStatusCode();
+
+                //return await response.Content.ReadAsStringAsync();
+
+                using (WebClient client = new WebClient())
+                {
+                    client.Headers[HttpRequestHeader.ContentType] = "application/json";
+                    client.Headers[HttpRequestHeader.Authorization] = "Bearer " + bearerAuthKey;
+                    string jsonContent = JsonConvert.SerializeObject(SoftwareLicenseRequestReponse);
+                    string response = client.UploadString("http://localhost:5000/api/SoftwareLicense/Register", jsonContent);
+                    return response;
+                }
+
+
+            }
+            catch (HttpRequestException ex)
+            {
+                // Handle the exception (e.g., log or rethrow)
+                return $"Request error: {ex.Message}";
+            }
+        }
     }
 
 
