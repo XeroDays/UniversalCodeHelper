@@ -121,25 +121,15 @@ namespace Softasium.Licenser
         private async Task<string> GenerateTaskStringAsync()
         {
             try
-            {
-                //string jsonContent = JsonSerializer.Serialize(SoftwareLicenseRequestReponse);
-                //var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-                //HttpResponseMessage response = await _httpClient.PostAsync(serverUrl, content);
-                //response.EnsureSuccessStatusCode();
-
-                //return await response.Content.ReadAsStringAsync();
-
+            {  
                 using (WebClient client = new WebClient())
                 {
                     client.Headers[HttpRequestHeader.ContentType] = "application/json";
                     client.Headers[HttpRequestHeader.Authorization] = "Bearer " + bearerAuthKey;
                     string jsonContent = JsonConvert.SerializeObject(SoftwareLicenseRequestReponse);
-                    string response = client.UploadString("http://localhost:5000/api/SoftwareLicense/Register", jsonContent);
+                    string response = client.UploadString("https://api.softasium.com/api/SoftwareLicencing/Register", jsonContent);
                     return response;
-                }
-
-
+                }  
             }
             catch (HttpRequestException ex)
             {
