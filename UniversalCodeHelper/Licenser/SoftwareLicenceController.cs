@@ -42,7 +42,7 @@ namespace Softasium.Licenser
             //populate software license request model
             SoftwareLicenseRequestReponse = new SoftwareLicenseRequestReponse
             {
-                DeviceUUID = GetDeviceID(),
+                DeviceUUID =  GetDeviceID(),
                 DeviceInfo = GetDeviceInfo(),
                 AppID = appID,
                 BuildVersion = CurrentBuildVersion,
@@ -55,8 +55,7 @@ namespace Softasium.Licenser
 
 
         private string GetDeviceID()
-        {
-
+        { 
             String PCID = String.Empty;
             RegistryKey localKey;
             if (Environment.Is64BitOperatingSystem)
@@ -164,8 +163,7 @@ namespace Softasium.Licenser
                 }
             }
             catch (HttpRequestException ex)
-            {
-                // Handle the exception (e.g., log or rethrow)
+            { 
                 return $"Request error: {ex.Message}";
             }
         }
@@ -183,6 +181,7 @@ namespace Softasium.Licenser
         public bool ForceUpdate { get; set; }
         public string DownloadUrl { get; set; }
         public string LatestVersion { get; set; }
+        public string Logs { get; set; }
     }
 
 }
