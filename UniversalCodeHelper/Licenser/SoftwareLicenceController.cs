@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Win32;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,6 +16,11 @@ using System.Windows.Forms;
 namespace Softasium.Licenser
 {
 
+
+    public static class DeviceInformationRegisterar
+    {
+
+    }
 
     public class SoftwareLicenceController
     {
@@ -36,26 +42,55 @@ namespace Softasium.Licenser
             //populate software license request model
             SoftwareLicenseRequestReponse = new SoftwareLicenseRequestReponse
             {
-                DeviceUUID = GetCPUID(),
+                DeviceUUID = GetDeviceID(),
                 DeviceInfo = GetDeviceInfo(),
                 AppID = appID,
                 BuildVersion = CurrentBuildVersion,
                 VersionName = CurrentVersion
             };
             //register the user license
+
+            RegisterLicense();
         }
 
 
-        private string GetCPUID()
+        private string GetDeviceID()
         {
-            string cpuId = string.Empty;
+
+            String PCID = String.Empty;
+            RegistryKey localKey;
+            if (Environment.Is64BitOperatingSystem)
+                localKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
+            else
+                localKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
+            var RegKEY = localKey.OpenSubKey(@"SOFTWARE\Microsoft\SQMClient");
+            if (RegKEY != null)
+            {
+                PCID = RegKEY.GetValue("MachineId").ToString().Trim();
+            }
+             
+            if (PCID.StartsWith("{")  )
+            {
+                PCID = PCID.Substring(1, PCID.Length - 1); 
+            }
+
+            if ( PCID.EndsWith("}"))
+            {
+                PCID = PCID.Substring(0, PCID.Length - 1);
+            } 
+            return PCID;
+        }
+
+        private string GetDeviceInfo()
+        {
+            string deviceId = string.Empty;
             try
             {
-                using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("select ProcessorId from Win32_Processor"))
+                using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_ComputerSystemProduct"))
                 {
                     foreach (ManagementObject obj in searcher.Get())
                     {
-                        cpuId = obj["ProcessorId"]?.ToString();
+                        deviceId = obj["UUID"]?.ToString();
                     }
                 }
             }
@@ -63,65 +98,62 @@ namespace Softasium.Licenser
             {
                 Console.WriteLine("Error retrieving CPU ID: " + ex.Message);
             }
-            return cpuId;
 
-        }
-
-        private string GetDeviceInfo()
-        {
-            StringBuilder info = new StringBuilder();
-
-            try
+            string processorInfo = "";
+            using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_Processor"))
             {
-                info.AppendLine("OS Version: " + RuntimeInformation.OSDescription);
-                info.AppendLine("OS Architecture (Bit Rate): " + RuntimeInformation.OSArchitecture.ToString());
-                info.AppendLine($"Screen Resolution: {Screen.PrimaryScreen.Bounds.Width} x {Screen.PrimaryScreen.Bounds.Height}");
+                foreach (ManagementObject obj in searcher.Get())
+                {
+                    processorInfo = obj["Name"]?.ToString();
+                }
             }
-            catch (Exception ee)
-            {
-                info.AppendLine("Error retrieving device info: " + ee.Message);
-            }
+
             StringBuilder details = new StringBuilder();
+            details.AppendLine("Name: " + Environment.MachineName);
+            details.AppendLine("Device ID: " + deviceId);
+            details.AppendLine("Processor: " + processorInfo);
+            details.AppendLine("Device Info: ");
             try
             {
-
                 using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_OperatingSystem"))
                 {
                     foreach (ManagementObject obj in searcher.Get())
                     {
                         details.AppendLine("Operating System Name: " + obj["Caption"]);
                         details.AppendLine("Version: " + obj["Version"]);
-                        details.AppendLine("Manufacturer: " + obj["Manufacturer"]);
-                        details.AppendLine("Last Boot Up Time: " + obj["LastBootUpTime"]);
+                        string lastBootUpTime = obj["LastBootUpTime"].ToString();
+                        DateTime lastBootUpDateTime = ManagementDateTimeConverter.ToDateTime(lastBootUpTime);
+                        TimeSpan timeAgo = DateTime.Now - lastBootUpDateTime;
+                        string timeAgoString = timeAgo.Hours + " hours " + timeAgo.Minutes + " minutes ago";
+
+                        details.AppendLine("Last Boot Up Time: " + timeAgoString);
                     }
                 }
+
+                details.AppendLine($"Screen Resolution: {Screen.PrimaryScreen.Bounds.Width} x {Screen.PrimaryScreen.Bounds.Height}");
+                details.AppendLine("OS Architecture: " + RuntimeInformation.OSArchitecture.ToString());
+
             }
             catch (Exception ex)
             {
                 details.AppendLine("Error retrieving OS details: " + ex.Message);
             }
 
-            info.AppendLine("\nAdditional OS Details:");
-            info.AppendLine(details.ToString());
-
-            return info.ToString();
+            return details.ToString();
         }
 
 
-        private string RegisterLicense()
+        private async Task RegisterLicense()
         {
-            //send the request to the server
-            //get the response
-            //return the response
-            return string.Empty;
+
+            string jsonResponse = await GenerateTaskStringAsync();
         }
 
 
-        //generate task string async method which will send post request to a server url along with the sofware license model in josn body
         private async Task<string> GenerateTaskStringAsync()
         {
             try
-            {  
+            {
                 using (WebClient client = new WebClient())
                 {
                     client.Headers[HttpRequestHeader.ContentType] = "application/json";
@@ -129,7 +161,7 @@ namespace Softasium.Licenser
                     string jsonContent = JsonConvert.SerializeObject(SoftwareLicenseRequestReponse);
                     string response = client.UploadString("https://api.softasium.com/api/SoftwareLicencing/Register", jsonContent);
                     return response;
-                }  
+                }
             }
             catch (HttpRequestException ex)
             {

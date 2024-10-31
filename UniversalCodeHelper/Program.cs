@@ -1,3 +1,4 @@
+using Softasium.Licenser;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace UniversalCodeHelper
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+            SoftwareLicenceController licenser = new SoftwareLicenceController();
             Application.Run(new Home());
         }
     }
