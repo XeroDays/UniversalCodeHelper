@@ -18,9 +18,7 @@ namespace UniversalCodeHelper
         {
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
-            SoftwareLicenceController licenser = new SoftwareLicenceController();
+            Application.SetCompatibleTextRenderingDefault(false); 
             Application.Run(new Home());
         }
     }

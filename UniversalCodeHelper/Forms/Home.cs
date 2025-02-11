@@ -25,11 +25,9 @@ namespace UniversalCodeHelper.Forms
         private void btnFlutterClassGenerate_Click(object sender, EventArgs e)
         {
             Flutter_Class frm = new Flutter_Class();
-            this.Hide();
-
+            this.Hide(); 
             frm.Disposed += Frm_Deactivate;
-            frm.ShowDialog();
-            //this.Close();
+            frm.ShowDialog(); 
 
         }
 
@@ -71,6 +69,14 @@ namespace UniversalCodeHelper.Forms
         private void btnLocalization_Click(object sender, EventArgs e)
         {
             Translator translator = new Translator();
+            this.Hide();
+            translator.Disposed += Frm_Deactivate;
+            translator.Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            YoloTxtXmlConverter translator = new YoloTxtXmlConverter();
             this.Hide();
             translator.Disposed += Frm_Deactivate;
             translator.Show();
